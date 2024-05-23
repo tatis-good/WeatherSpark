@@ -24,9 +24,9 @@ class ViewController: UIViewController {
     func setWeather() {
         
         let fetchWeatherString = YumemiWeather.fetchWeatherCondition()
-       
         
-       var weather = "sunny"
+        
+        var weather = "sunny"
         var tintcolor = UIColor.red
         
         switch fetchWeatherString {
@@ -45,5 +45,12 @@ class ViewController: UIViewController {
         weatherImage.image = UIImage(named: weather)
         weatherImage.tintColor = tintcolor
     }
-
+    
+    
+    @IBAction func closeBtn(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
+    
+    
 }
