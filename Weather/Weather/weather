@@ -1,0 +1,10 @@
+//
+//  File.swift
+//  Weather
+//
+//  Created by spark-02 on 2024/05/24.
+//
+
+import Foundation
+import YumemiWeather
+
