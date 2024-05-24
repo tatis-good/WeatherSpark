@@ -22,33 +22,33 @@ class ViewController: UIViewController, YumemiDelegate {
     @IBAction func ReloadBtn(_ sender: Any) {
         weatherDelegate.yumemiDate()
     }
-    func ymmWeather(type: String) {
-    
-        var weather = "sunny"
-        var tintcolor = UIColor.red
-        
-        switch type {
-        case "sunny":
-            weather = "sunny"
-            tintcolor = UIColor.red
-        case "cloudy":
-            weather = "cloudy"
-            tintcolor = UIColor.gray
-        case "rainy":
-            weather = "rainy"
-            tintcolor = UIColor.blue
-        default:
-            break
+       func ymmWeather(type: String) {
+            
+            var weather = "sunny"
+            var tintcolor = UIColor.red
+            
+            switch type {
+            case "sunny":
+                weather = "sunny"
+                tintcolor = UIColor.red
+            case "cloudy":
+                weather = "cloudy"
+                tintcolor = UIColor.gray
+            case "rainy":
+                weather = "rainy"
+                tintcolor = UIColor.blue
+            default:
+                break
+            }
+            weatherImage.image = UIImage(named: weather)
+            weatherImage.tintColor = tintcolor
         }
-        weatherImage.image = UIImage(named: weather)
-        weatherImage.tintColor = tintcolor
+        
+        
+        @IBAction func closeBtn(_ sender: Any) {
+            dismiss(animated: true)
+        }
+        
+        
+        
     }
-    
-    
-    @IBAction func closeBtn(_ sender: Any) {
-        dismiss(animated: true)
-    }
-    
-    
-    
-}
