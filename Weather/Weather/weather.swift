@@ -10,16 +10,19 @@ import YumemiWeather
 
 protocol YumemiDelegate {
     func ymmWeather(type: String)
+    func showAlert(alert: String)
     }
 
 class WeatherDelegate {
     var delegate: YumemiDelegate?
     
     func yumemiDate() {
-        
-        let fetchWeatherString = YumemiWeather.fetchWeatherCondition()
-        delegate?.ymmWeather(type: fetchWeatherString)
-        
+        do{
+            let fetchWeatherString = try YumemiWeather.fetchWeatherCondition(at: "")
+            delegate?.ymmWeather(type: fetchWeatherString)
+        }catch{
+        delegate?.showAlert(alert: "エラー1111")
+        }
     
         
     }

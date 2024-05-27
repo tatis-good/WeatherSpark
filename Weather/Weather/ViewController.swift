@@ -21,6 +21,7 @@ class ViewController: UIViewController, YumemiDelegate {
     
     @IBAction func ReloadBtn(_ sender: Any) {
         weatherDelegate.yumemiDate()
+      
     }
        func ymmWeather(type: String) {
             
@@ -48,7 +49,11 @@ class ViewController: UIViewController, YumemiDelegate {
         @IBAction func closeBtn(_ sender: Any) {
             dismiss(animated: true)
         }
-        
-        
-        
+    func showAlert(alert: String){
+    let alertController = UIAlertController(title: alert, message: "時間を置いてもう一度お試しください", preferredStyle: .alert)
+    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+}))
+    self.present(alertController, animated: true, completion: nil)
+}
     }
+
