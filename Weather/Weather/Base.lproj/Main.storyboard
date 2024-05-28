@@ -103,6 +103,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="l23-2J-ws8"/>
                     <connections>
+                        <outlet property="maxLabel" destination="aaG-AN-8dQ" id="fZ0-0G-eSO"/>
+                        <outlet property="minLabel" destination="yoH-32-k8i" id="vDr-WR-Ct0"/>
                         <outlet property="weatherImage" destination="bbL-yv-LJn" id="cLd-kH-s0y"/>
                     </connections>
                 </viewController>
