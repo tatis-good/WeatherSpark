@@ -8,40 +8,58 @@
 import Foundation
 import YumemiWeather
 
+struct Date:Codable{
+    let area: String
+    let date: String
+}
+
+struct Weather:Codable{
+    var maxTemperature: Int
+    var minTemperature: Int
+    var fetchWeatherCondition :String
+    
+    enum CodingKeys: String, CodingKey {
+        case maxTemperature = "max_temperature"
+        case minTemperature = "min_temperature"
+        case fetchWeatherCondition = "weather_condition"
+    }
+}
+
+
 protocol YumemiDelegate {
-    func setWeatherType(type: String)
     func setWeatherError(alert: String)
-    func setmaxTemperature(max: Int)
-    func setminTemperature(min: Int)
+    func setWeather(weather: Weather)
     }
 
 class WeatherDelegate {
     var delegate: YumemiDelegate?
-   
-   let requestJson = """
-{
-    "area": "Tokyo",
-    "date": "2020-04-01T12:00:00+09:00"
-}
-"""
+    
+    
+
     func setWeatherType() {
+        let sendJsonString = Date(area: "tokyo",date: "2020-04-01T12:00:00+09:00")
+        
         do{
+            let encoder = JSONEncoder()
+            let jsonDate = try encoder.encode(sendJsonString)
+            guard let requestJson = String(data: jsonDate, encoding: .utf8)
+            else {return
+            }
             
             let fetchWeatherCondition = try YumemiWeather.fetchWeather(requestJson)
+            guard let jsonData = fetchWeatherCondition.data(using: .utf8) else{
+                return
+            }
+            let decorer = JSONDecoder()
+            let weather  = try decorer.decode(Weather.self, from: jsonData)
             
-            guard let jsonData = fetchWeatherCondition.data(using: .utf8),
-                  let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any],
-                  let maxTemperature = json["max_temperature"] as? Int,
-                  let minTemperature = json["min_temperature"] as? Int,
-                  let fetchWeatherCondition = json["weather_condition"] as? String
+            guard let jsonData = fetchWeatherCondition.data(using: .utf8)
             else{ return
             }
-            delegate?.setWeatherType(type: fetchWeatherCondition)
-            delegate?.setmaxTemperature(max: maxTemperature)
-            delegate?.setminTemperature(min: minTemperature)
+            delegate?.setWeather(weather: weather)
         }catch{
-        delegate?.setWeatherError(alert: "エラー1111")
-        
+            delegate?.setWeatherError(alert: "エラー1111")
+            
         }
     }
 }

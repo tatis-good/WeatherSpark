@@ -23,26 +23,29 @@ class ViewController: UIViewController, YumemiDelegate {
     @IBAction func ReloadBtn(_ sender: Any) {
         weatherDelegate.setWeatherType()
     }
-    func setWeatherType(type: String) {
+    func setWeather(weather: Weather) {
         
-        var weather = "sunny"
+        var weatherString = weather.fetchWeatherCondition
         var tintcolor = UIColor.red
         
-        switch type {
+        switch  weatherString {
         case "sunny":
-            weather = "sunny"
+            weatherString = "sunny"
             tintcolor = UIColor.red
         case "cloudy":
-            weather = "cloudy"
+            weatherString = "cloudy"
             tintcolor = UIColor.gray
         case "rainy":
-            weather = "rainy"
+            weatherString = "rainy"
             tintcolor = UIColor.blue
         default:
             break
         }
-        weatherImage.image = UIImage(named: weather)
+        weatherImage.image = UIImage(named: weatherString)
         weatherImage.tintColor = tintcolor
+        
+        self.maxLabel.text = String(weather.maxTemperature)
+        self.minLabel.text = String(weather.minTemperature)
     }
     
     
@@ -50,13 +53,6 @@ class ViewController: UIViewController, YumemiDelegate {
         dismiss(animated: true)
     }
     
-    func setmaxTemperature(max: Int) {
-        self.maxLabel.text = String(max)
-    }
-    
-    func setminTemperature(min: Int) {
-        self.minLabel.text = String(min)
-    }
     
     
     func setWeatherError(alert: String){
