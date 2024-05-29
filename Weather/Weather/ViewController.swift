@@ -7,45 +7,54 @@
 
 import UIKit
 
-
 class ViewController: UIViewController, YumemiDelegate {
-    
     @IBOutlet weak var weatherImage: UIImageView!
     @IBOutlet weak var minLabel: UILabel!
     @IBOutlet weak var maxLabel: UILabel!
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
+    
     let weatherDelegate = WeatherDelegate()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         weatherDelegate.delegate = self
+        indicator.hidesWhenStopped = true
+        
     }
     
     @IBAction func ReloadBtn(_ sender: Any) {
         weatherDelegate.setWeatherType()
+        indicator.startAnimating()
     }
     func setWeather(weather: Weather) {
         
         var weatherString = weather.fetchWeatherCondition
         var tintcolor = UIColor.red
         
-        switch  weatherString {
-        case "sunny":
-            weatherString = "sunny"
-            tintcolor = UIColor.red
-        case "cloudy":
-            weatherString = "cloudy"
-            tintcolor = UIColor.gray
-        case "rainy":
-            weatherString = "rainy"
-            tintcolor = UIColor.blue
-        default:
-            break
+        DispatchQueue.global().async {
+            switch  weatherString {
+            case "sunny":
+                weatherString = "sunny"
+                tintcolor = UIColor.red
+            case "cloudy":
+                weatherString = "cloudy"
+                tintcolor = UIColor.gray
+            case "rainy":
+                weatherString = "rainy"
+                tintcolor = UIColor.blue
+            default:
+                break
+            }
         }
-        weatherImage.image = UIImage(named: weatherString)
-        weatherImage.tintColor = tintcolor
         
-        self.maxLabel.text = String(weather.maxTemperature)
-        self.minLabel.text = String(weather.minTemperature)
+        DispatchQueue.main.async{
+            self.weatherImage.image = UIImage(named: weatherString)
+            self.weatherImage.tintColor = tintcolor
+            
+            self.maxLabel.text = String(weather.maxTemperature)
+            self.minLabel.text = String(weather.minTemperature)
+            self.indicator.stopAnimating()
+        }
     }
     
     
@@ -56,12 +65,16 @@ class ViewController: UIViewController, YumemiDelegate {
     
     
     func setWeatherError(alert: String){
-        let alertController = UIAlertController(title: alert, message: "時間を置いてもう一度お試しください", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-        }))
-        self.present(alertController, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: alert, message: "時間を置いてもう一度お試しください", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            }))
+            self.present(alertController, animated: true, completion: nil)
+            self.indicator.stopAnimating()
+        }
     }
 }
+
 
 
 

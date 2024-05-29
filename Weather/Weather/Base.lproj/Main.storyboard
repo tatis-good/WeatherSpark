@@ -88,6 +88,9 @@
                                     <action selector="ReloadBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wde-FA-Zm7"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="jMM-Ha-2Lg">
+                                <rect key="frame" x="186.66666666666666" y="574.66666666666663" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -95,14 +98,17 @@
                             <constraint firstItem="kr5-HZ-pbp" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.5" id="9ds-jb-o2U"/>
                             <constraint firstItem="Ty7-ka-cEQ" firstAttribute="top" secondItem="kr5-HZ-pbp" secondAttribute="bottom" constant="80" id="OgJ-s2-6Kp"/>
                             <constraint firstItem="bvF-yQ-1XT" firstAttribute="centerX" secondItem="yoH-32-k8i" secondAttribute="centerX" id="Rtp-j0-FLb"/>
+                            <constraint firstItem="jMM-Ha-2Lg" firstAttribute="centerX" secondItem="bbL-yv-LJn" secondAttribute="centerX" id="b6c-1W-4Yz"/>
                             <constraint firstItem="kr5-HZ-pbp" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="cV8-Ov-YPp"/>
                             <constraint firstItem="Ty7-ka-cEQ" firstAttribute="centerX" secondItem="aaG-AN-8dQ" secondAttribute="centerX" id="g9Y-Xy-ZFj"/>
                             <constraint firstItem="bvF-yQ-1XT" firstAttribute="top" secondItem="kr5-HZ-pbp" secondAttribute="bottom" constant="80" id="hA7-Om-KpV"/>
                             <constraint firstItem="kr5-HZ-pbp" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ukw-M5-LZU"/>
+                            <constraint firstItem="jMM-Ha-2Lg" firstAttribute="top" secondItem="kr5-HZ-pbp" secondAttribute="bottom" constant="40" id="upc-vN-2tJ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="l23-2J-ws8"/>
                     <connections>
+                        <outlet property="indicator" destination="jMM-Ha-2Lg" id="J09-7Y-nYt"/>
                         <outlet property="maxLabel" destination="aaG-AN-8dQ" id="fZ0-0G-eSO"/>
                         <outlet property="minLabel" destination="yoH-32-k8i" id="vDr-WR-Ct0"/>
                         <outlet property="weatherImage" destination="bbL-yv-LJn" id="cLd-kH-s0y"/>
