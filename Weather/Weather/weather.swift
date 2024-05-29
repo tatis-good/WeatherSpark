@@ -8,22 +8,7 @@
 import Foundation
 import YumemiWeather
 
-struct Date:Codable{
-    let area: String
-    let date: String
-}
 
-struct Weather:Codable{
-    var maxTemperature: Int
-    var minTemperature: Int
-    var fetchWeatherCondition :String
-    
-    enum CodingKeys: String, CodingKey {
-        case maxTemperature = "max_temperature"
-        case minTemperature = "min_temperature"
-        case fetchWeatherCondition = "weather_condition"
-    }
-}
 
 
 protocol YumemiDelegate {
@@ -53,9 +38,6 @@ class WeatherDelegate {
             let decorer = JSONDecoder()
             let weather  = try decorer.decode(Weather.self, from: jsonData)
             
-            guard let jsonData = fetchWeatherCondition.data(using: .utf8)
-            else{ return
-            }
             delegate?.setWeather(weather: weather)
         }catch{
             delegate?.setWeatherError(alert: "エラー1111")
