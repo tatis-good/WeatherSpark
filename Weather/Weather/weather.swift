@@ -10,18 +10,11 @@ import YumemiWeather
 
 
 
-
-protocol YumemiDelegate {
-    func setWeatherError(alert: String)
-    func setWeather(weather: Weather)
-    }
-
 class WeatherDelegate {
-    var delegate: YumemiDelegate?
     
     
-
-    func setWeatherType() {
+    
+    func setWeatherType(completion: @escaping(Result<Weather,Error>) -> Void) {
         DispatchQueue.global().async {
             let sendJsonString = Date(area: "tokyo",date: "2020-04-01T12:00:00+09:00")
             
@@ -36,33 +29,37 @@ class WeatherDelegate {
                 guard let jsonData = fetchWeatherCondition.data(using: .utf8) else{
                     return
                 }
+                
                 let decorer = JSONDecoder()
                 let weather  = try decorer.decode(Weather.self, from: jsonData)
                 
-                self.delegate?.setWeather(weather: weather)
-            }catch{
-                self.delegate?.setWeatherError(alert: "エラー1111")
+                
+                
+                completion(.success(weather))
+            }  catch  {
+                completion(.failure(error))
                 
             }
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 

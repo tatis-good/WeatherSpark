@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, YumemiDelegate {
+class ViewController: UIViewController {
     @IBOutlet weak var weatherImage: UIImageView!
     @IBOutlet weak var minLabel: UILabel!
     @IBOutlet weak var maxLabel: UILabel!
@@ -17,17 +17,33 @@ class ViewController: UIViewController, YumemiDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        weatherDelegate.delegate = self
         indicator.hidesWhenStopped = true
         
     }
     
     @IBAction func ReloadBtn(_ sender: Any) {
-        weatherDelegate.setWeatherType()
-        indicator.startAnimating()
+        reloadWeather()
     }
+    
+    func reloadWeather() {
+        DispatchQueue.main.async {
+            self.indicator.startAnimating()
+            self.weatherDelegate.setWeatherType { result in
+                switch result {
+                case .success(let weather):
+                    self.setWeather(weather: weather)
+                case .failure(let error):
+                    self.setWeatherError(alert: "Error: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    @IBAction func closeButton(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
     func setWeather(weather: Weather) {
-        
         var weatherString = weather.fetchWeatherCondition
         var tintcolor = UIColor.red
         
@@ -46,7 +62,6 @@ class ViewController: UIViewController, YumemiDelegate {
                 break
             }
         }
-        
         DispatchQueue.main.async{
             self.weatherImage.image = UIImage(named: weatherString)
             self.weatherImage.tintColor = tintcolor
@@ -56,13 +71,6 @@ class ViewController: UIViewController, YumemiDelegate {
             self.indicator.stopAnimating()
         }
     }
-    
-    
-    @IBAction func closeBtn(_ sender: Any) {
-        dismiss(animated: true)
-    }
-    
-    
     
     func setWeatherError(alert: String){
         DispatchQueue.main.async {
@@ -74,13 +82,5 @@ class ViewController: UIViewController, YumemiDelegate {
         }
     }
 }
-
-
-
-
-
-
-
-
 
 
