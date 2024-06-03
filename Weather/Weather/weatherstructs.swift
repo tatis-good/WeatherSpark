@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import YumemiWeather
 
 struct Date:Codable{
     let area: String
@@ -22,4 +23,16 @@ struct Weather:Codable{
         case minTemperature = "min_temperature"
         case fetchWeatherCondition = "weather_condition"
     }
+
 }
+
+struct List:Codable{
+    let areas: [String]
+    let date: String
+    
+}
+struct AreaResponse:Codable{
+    let area: Area
+    let info: Weather
+}
+
