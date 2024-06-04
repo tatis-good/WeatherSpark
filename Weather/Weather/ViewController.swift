@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
     let weatherDelegate = WeatherDelegate()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         indicator.hidesWhenStopped = true

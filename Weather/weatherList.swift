@@ -7,12 +7,13 @@
 
 import Foundation
 import YumemiWeather
+import UIKit
 
 class weatherList {
     func listData(completion: @escaping(Result<[AreaResponse],Error>) -> Void) {
         DispatchQueue.global().async {
-            let sendJsonString = List(areas: ["Tokyo"],date: "2020-04-01T12:00:00+09:00")
-        
+            let sendJsonString = List(areas: [],date: "2020-04-01T12:00:00+09:00")
+            
             do{
                 let encoder = JSONEncoder()
                 let jsonDate = try encoder.encode(sendJsonString)
@@ -27,7 +28,7 @@ class weatherList {
                 
                 let decorer = JSONDecoder()
                 let weather  = try decorer.decode([AreaResponse].self, from: jsonData)
-
+                
                 completion(.success(weather))
             }  catch  {
                 completion(.failure(error))
@@ -35,14 +36,3 @@ class weatherList {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
