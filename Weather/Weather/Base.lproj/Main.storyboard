@@ -60,7 +60,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="BYZ-38-t0r" kind="show" identifier="cell" id="zUM-Rj-fiL"/>
+                                            <segue destination="BYZ-38-t0r" kind="show" identifier="sendDetail" id="zUM-Rj-fiL"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

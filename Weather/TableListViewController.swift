@@ -72,9 +72,10 @@ class TableListViewController: UIViewController,UITableViewDataSource {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "cell" {
+        if segue.identifier == "sendDetail",
+           let IndexPath = tableView.indexPathForSelectedRow {
             if let cellSegue = segue.destination as? ViewController {
-        
+                cellSegue.weatherArea = areas[IndexPath.row]
             }
         }
     }

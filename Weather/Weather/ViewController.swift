@@ -14,10 +14,42 @@ class ViewController: UIViewController {
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
     let weatherDelegate = WeatherDelegate()
-
+    var weatherArea:AreaResponse?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         indicator.hidesWhenStopped = true
+        
+        showData()
+    }
+    func showData() {
+        var weatherString = "sunny"
+        var tintcolor = UIColor.red
+        guard let weatherArea = self.weatherArea else {
+            return }
+            
+            DispatchQueue.global().async {
+                switch  weatherArea.info.fetchWeatherCondition {
+                case "sunny":
+                    weatherString = "sunny"
+                    tintcolor = UIColor.red
+                case "cloudy":
+                    weatherString = "cloudy"
+                    tintcolor = UIColor.gray
+                case "rainy":
+                    weatherString = "rainy"
+                    tintcolor = UIColor.blue
+                default:
+                    break
+                }
+            }
+            DispatchQueue.main.async{
+                self.weatherImage.image = UIImage(named: weatherString)
+                self.weatherImage.tintColor = tintcolor
+                
+                self.maxLabel.text = String(weatherArea.info.maxTemperature)
+                self.minLabel.text = String(weatherArea.info.minTemperature)
+            }
         
     }
     
