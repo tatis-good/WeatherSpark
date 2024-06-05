@@ -21,6 +21,8 @@ class ViewController: UIViewController {
         indicator.hidesWhenStopped = true
         
         showData()
+        
+        self.title = weatherArea?.area.rawValue
     }
     func showData() {
         var weatherString = "sunny"
