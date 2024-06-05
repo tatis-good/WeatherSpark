@@ -72,8 +72,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func closeButton(_ sender: Any) {
-        dismiss(animated: true)
+       dismiss(animated: true)
     }
+    
+    
     
     func setWeather(weather: Weather) {
         var weatherString = weather.fetchWeatherCondition

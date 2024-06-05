@@ -8,7 +8,7 @@
 import Foundation
 import YumemiWeather
 
-struct Date:Codable{
+struct WeatherDate:Codable{
     let area: String
     let date: String
 }

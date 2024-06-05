@@ -12,7 +12,8 @@ import UIKit
 class weatherList {
     func listData(completion: @escaping(Result<[AreaResponse],Error>) -> Void) {
         DispatchQueue.global().async {
-            let sendJsonString = List(areas: [],date: "2020-04-01T12:00:00+09:00")
+            let date = Date().ISO8601Format()
+            let sendJsonString = List(areas: [],date: date)
             
             do{
                 let encoder = JSONEncoder()

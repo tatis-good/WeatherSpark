@@ -13,12 +13,49 @@ class TableListViewController: UIViewController,UITableViewDataSource {
     
     let WeatherList = weatherList()
     var areas : [AreaResponse] = []
+    var refreshControl:UIRefreshControl!
+    let semaphore = DispatchSemaphore(value: 1)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         
         selectWeather()
+        
+        refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "再読み込み中")
+        refreshControl.addTarget(self, action: #selector(TableListViewController.refresh), for: UIControl.Event.valueChanged)
+        tableView.addSubview(refreshControl)
+    }
+    
+    func updateData () {
+        DispatchQueue.global().async {
+            
+            self.selectWeather()
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.semaphore.signal()
+            }
+        }
+    }
+    
+    @objc func refresh() {
+        updateData()
+        
+        semaphore.wait()
+        semaphore.signal()
+        
+        refreshControl.endRefreshing()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let selectedRows = tableView.indexPathsForSelectedRows {
+            for indexPath in selectedRows {
+                tableView.deselectRow(at: indexPath, animated: animated)
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -49,7 +86,6 @@ class TableListViewController: UIViewController,UITableViewDataSource {
         return cell
     }
     
-    
     func selectWeather() {
         self.WeatherList.listData { result in
             DispatchQueue.main.async {
@@ -63,11 +99,12 @@ class TableListViewController: UIViewController,UITableViewDataSource {
             }
         }
     }
+    
     func setWeatherError(alert: String){
         DispatchQueue.main.async {
             let alertController = UIAlertController(title: alert, message: "時間を置いてもう一度お試しください", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-            }))
+            alertController.addAction(UIAlertAction(title: "リトライ", style: .default, handler: { action in
+                self.selectWeather() }))
         }
     }
     
@@ -79,5 +116,5 @@ class TableListViewController: UIViewController,UITableViewDataSource {
             }
         }
     }
-    }
+}
 
