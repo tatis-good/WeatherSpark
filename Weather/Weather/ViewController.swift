@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     
     let weatherDelegate = WeatherDelegate()
     var weatherArea:AreaResponse?
+    var data: [AreaResponse] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
