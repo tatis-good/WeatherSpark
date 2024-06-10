@@ -14,7 +14,6 @@ class weatherList {
         DispatchQueue.global().async {
             let date = Date().ISO8601Format()
             let sendJsonString = List(areas: [],date: date)
-            
             do{
                 let encoder = JSONEncoder()
                 let jsonDate = try encoder.encode(sendJsonString)
@@ -37,3 +36,4 @@ class weatherList {
         }
     }
 }
+
